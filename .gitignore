@@ -43,3 +43,4 @@ back/.env
 env/
 venv/
 ENV/
+./.cache
