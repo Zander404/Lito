@@ -1,6 +1,7 @@
 
 import speech_recognition as sr
 import pyttsx3 as lito
+import requests 
 
 # Pegar o som do Microfone
 microfone = sr.Recognizer()
@@ -18,13 +19,18 @@ while True:
         print("O Lito escutou:  " + response)
 
         #condição de saida da Aplicação
-        if response == "tchau":
+        if "tchau" in response:
             fala("Tchau !!!")
             
             break
+        if 'good' in response:
+            response_r = requests.get('http://localhost:8000/blog/nigth/')
+            if response_r.status_code == 200: 
+                response_r_text = response_r.text
+                fala(response_r_text)
         
         #ativar spotify
-        if response == "música":
+        if  "música" in response:
             fala("Tocando música")
            
 
@@ -33,4 +39,4 @@ while True:
        fala("O Lito não te escutou")
        
     except sr.RequestError as e:
-        print("Eita deu Ruim, o Lito caiu; {0}".format(e))
+        print(f"Eita deu Ruim, o Lito caiu; {e}")
